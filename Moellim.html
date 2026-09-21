@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>University Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #333;
+      background: white;
+    }
+
+    /* Header */
+    header {
+      height: 52px;
+      background: #333;
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+    }
+
+    .page {
+      padding: 48px 15px;
+    }
+
+    .customize {
+      text-align: right;
+      margin-bottom: 39px;
+    }
+
+    button {
+      border: 1px solid #ddd;
+      background: #f5f6f7;
+      padding: 9px 13px;
+      border-radius: 4px;
+      color: #345;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .box {
+      border: 1px solid #d5d5d5;
+      border-radius: 4px;
+      background: #fafafa;
+      padding: 16px;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 18px;
+      font-weight: normal;
+      color: #456;
+    }
+
+    /* Navigation */
+    .nav a {
+      display: block;
+      color: #0878d1;
+      text-decoration: none;
+      line-height: 25px;
+    }
+
+    .nav .sub {
+      padding-left: 18px;
+    }
+
+    /* Courses */
+    .course-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .course {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+      height: 263px;
+    }
+
+    .image {
+      height: 112px;
+      background: #f4c967;
+    }
+
+    .image.two { background: #e7b75b; }
+    .image.three { background: #1288d5; }
+
+    .course-content {
+      padding: 14px;
+    }
+
+    .term {
+      color: #778899;
+      margin-bottom: 8px;
+    }
+
+    .name {
+      line-height: 23px;
+      height: 69px;
+      font-size: 14px;
+    }
+
+    .progress {
+      height: 7px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    
+    .show {
+      margin-top: 13px;
+    }
+
+    /* Right side */
+    .right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .calendar {
+      text-align: center;
+    }
+
+    .calendar table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .calendar th,
+    .calendar td {
+      padding: 4px 1px;
+    }
+
+    .calendar th {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 210px 1fr;
+      }
+
+      .right {
+        display: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .courses {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>Riphah International University -Moellim</header>
+
+
+
+  <div class="layout">
+
+    <!-- Center -->
+    <div class="box" style="width:100%;">
+      <h2>Course overview</h2>
+
+      <div class="course-top">
+        <button>▼ In progress</button>
+        <div>
+          <button>☷ Course name</button>
+          <button>▦ Card</button>
+        </div>
+      </div>
+
+      <div class="courses">
+
+        <div class="course">
+          <div class="image"></div>
+          <div class="course-content">
+            <div class="term">SPRING-2026</div>
+            <div class="name">SE4-1 Analysis of Algorithms (Male)</div>
+          </div>
+        </div>
+
+        <div class="course">
+          <div class="image two"></div>
+          <div class="course-content">
+            <div class="term">SPRING-2026</div>
+            <div class="name">SE4-1 HCI &amp; Computer Graphics (Male) Lab</div>
+          </div>
+        </div>
+
+        <div class="course">
+          <div class="image three"></div>
+          <div class="course-content">
+            <div class="term">SPRING-2026</div>
+            <div class="name">SE4-1 Software Requirement Engg (Male) Lab</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="show">
+        Show <button>All ▼</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

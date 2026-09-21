@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        form {
+            width: 300px;
+            margin: 50px auto;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            width: auto;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(131, 131, 255);
+            color: rgb(250, 250, 250);
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form>
+
+        <h2>Signup</h2>
+
+        <label>Username:</label>
+        <input type="text" name="username">
+
+        <label>Email:</label>
+        <input type="email" name="email">
+
+        <label>Password:</label>
+        <input type="password" name="password">
+
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" value="male"> Male
+        <input type="radio" name="gender" value="female"> Female
+
+        <br><br>
+
+        <label>Country:</label>
+        <select name="country">
+            <option>USA</option>
+            <option>Canada</option>
+            <option>UK</option>
+            <option>Pakistan</option>
+            <option>Germany</option>
+            <option>France</option>
+        </select>
+
+        <input type="submit" value="Signup">
+
+    </form>
+
+</body>
+</html>
