@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Key Press Demo</title>
 </head>
 <body>
-    <h1>Javascript Lecture</h1>
-    
-    <p> is button py <span id="cv" style="font-style: bol;"
-    <button id="clickbtn"> click me</button>  
-    <script> 
-        const btn= document.getElementById('clickbtn');
-        const cdsp=document.getElementById("cv");
-        let count=0;
-        btn.addEventListener('click', function(){
-            count=count++;
-            cdsp.textContent=count;
-            
+    <h1>Press Enter in the box</h1>
+
+    <input type="text" id="myInput" placeholder="Type here and press Enter">
+    <p id="result">Key pressed: --</p>
+
+    <script>
+        const input = document.getElementById('myInput');
+        const result = document.getElementById('result');
+        const keyHistory = [];
+
+        input.addEventListener('keydown', function (event) {
+            keyHistory.push(event.key);
+
+            if (event.key === 'Enter') {
+                result.textContent = 'Key pressed: ' + event.key + ' | History: ' + keyHistory.join(', ');
+            }
         });
-        
-</script>
-    </body>
+    </script>
+</body>
 </html>
