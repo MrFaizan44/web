@@ -3,26 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key Press Demo</title>
+    <title>Typing Master</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 700px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1d3557;
+        }
+
+        .sentence {
+            font-size: 22px;
+            line-height: 1.6;
+            background: #eef4ff;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            resize: none;
+            font-size: 18px;
+            padding: 12px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .stats div {
+            flex: 1;
+            background: #f8fafc;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stats span {
+            display: block;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .stats strong {
+            font-size: 26px;
+            color: #0f172a;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #166534;
+        }
+    </style>
 </head>
 <body>
-    <h1>Press Enter in the box</h1>
+    <div class="container">
+        <h1>Typing Master</h1>
 
-    <input type="text" id="myInput" placeholder="Type here and press Enter">
-    <p id="result">Key pressed: --</p>
+        <p id="sentence" class="sentence"></p>
+        <textarea id="typingInput" placeholder="Start typing here..."></textarea>
+
+        <div class="stats">
+            <div>
+                <span>Time</span>
+                <strong id="time">0s</strong>
+            </div>
+            <div>
+                <span>WPM</span>
+                <strong id="wpm">0</strong>
+            </div>
+            <div>
+                <span>Accuracy</span>
+                <strong id="accuracy">100%</strong>
+            </div>
+        </div>
+
+        <button id="restartBtn">Restart</button>
+        <p id="message"></p>
+    </div>
 
     <script>
-        const input = document.getElementById('myInput');
-        const result = document.getElementById('result');
+        const sentences = [
+            "Practice makes perfect when you type with focus and speed.",
+            "Typing every day helps you become faster and more confident.",
+            "The best way to improve is to keep writing with correct habits.",
+            "A calm mind and steady hands build strong typing skills.",
+            "Fast fingers come from regular practice and patience."
+        ];
+
+        const sentenceEl = document.getElementById("sentence");
+        const typingInput = document.getElementById("typingInput");
+        const timeEl = document.getElementById("time");
+        const wpmEl = document.getElementById("wpm");
+        const accuracyEl = document.getElementById("accuracy");
+        const messageEl = document.getElementById("message");
+        const restartBtn = document.getElementById("restartBtn");
+
         const keyHistory = [];
+        let currentSentence = "";
+        let startTime = 0;
+        let timerId = null;
+        let started = false;
+        let finished = false;
 
-        input.addEventListener('keydown', function (event) {
-            keyHistory.push(event.key);
+        function pickSentence() {
+            currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
+            sentenceEl.textContent = currentSentence;
+        }
 
-            if (event.key === 'Enter') {
-                result.textContent = 'Key pressed: ' + event.key + ' | History: ' + keyHistory.join(', ');
+        function startTimer() {
+            startTime = Date.now();
+            timerId = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                timeEl.textContent = elapsed + "s";
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerId);
+        }
+
+        function updateStats() {
+            const typed = typingInput.value;
+            let correctChars = 0;
+
+            for (let i = 0; i < typed.length; i++) {
+                if (typed[i] === currentSentence[i]) {
+                    correctChars++;
+                }
             }
+
+            const totalTyped = typed.length || 1;
+            const accuracy = Math.round((correctChars / totalTyped) * 100);
+            const elapsedSeconds = Math.max(1, Math.floor((Date.now() - startTime) / 1000));
+            const wpm = Math.round((correctChars / 5) / (elapsedSeconds / 60));
+
+            accuracyEl.textContent = accuracy + "%";
+            wpmEl.textContent = wpm;
+        }
+
+        function checkCompletion() {
+            if (typingInput.value === currentSentence) {
+                finished = true;
+                stopTimer();
+
+                const elapsedSeconds = Math.max(1, Math.floor((Date.now() - startTime) / 1000));
+                const totalCorrect = currentSentence.length;
+                const finalWpm = Math.round((totalCorrect / 5) / (elapsedSeconds / 60));
+
+                messageEl.textContent = "Excellent! Final speed: " + finalWpm + " WPM";
+                typingInput.disabled = true;
+            }
+        }
+
+        function resetGame() {
+            pickSentence();
+            typingInput.value = "";
+            typingInput.disabled = false;
+            typingInput.focus();
+            timeEl.textContent = "0s";
+            wpmEl.textContent = "0";
+            accuracyEl.textContent = "100%";
+            messageEl.textContent = "";
+            keyHistory.length = 0;
+            started = false;
+            finished = false;
+            stopTimer();
+        }
+
+        typingInput.addEventListener("keydown", function (event) {
+            if (!started && !finished) {
+                started = true;
+                startTimer();
+            }
+            keyHistory.push(event.key);
         });
+
+        typingInput.addEventListener("input", function () {
+            if (finished) return;
+            updateStats();
+            checkCompletion();
+        });
+
+        restartBtn.addEventListener("click", resetGame);
+
+        resetGame();
     </script>
 </body>
 </html>
